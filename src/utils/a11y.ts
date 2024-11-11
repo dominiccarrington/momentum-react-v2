@@ -1,18 +1,13 @@
 import { AriaAttributes, useEffect } from 'react';
 
-export type AriaLabelRequired =
-  | {
-      /**
-       * Defines a string value that labels the current element.
-       */
-      'aria-label': AriaAttributes['aria-label'];
-    }
-  | {
-      /**
-       * Identifies the element (or elements) that labels the current element.
-       */
-      'aria-labelledby': AriaAttributes['aria-labelledby'];
-    };
+export type RequireEither<TFrom, TAttributes extends (keyof TFrom)[]> = TAttributes extends [
+  infer TFirst extends keyof TFrom,
+  ...infer TLast extends (keyof TFrom)[]
+]
+  ? { [K in TFirst]-?: TFrom[TFirst] } | RequireEither<TFrom, TLast>
+  : never;
+
+export type AriaLabelRequired = RequireEither<AriaAttributes, ['aria-label', 'aria-labelledby']>;
 
 /**
  * Check if `aria-labelledby` or `aria-label` are defined and are truthy

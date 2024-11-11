@@ -8,11 +8,11 @@ import { STYLE } from './RadioSimpleGroup.constants';
 import { RadioSimpleGroupProps } from './RadioSimpleGroup.types';
 import './RadioSimpleGroup.style.scss';
 
+export const RadioSimpleGroupContext = React.createContext(null);
+
 /**
  * The RadioSimpleGroup component.
  */
-export const RadioSimpleGroupContext = React.createContext(null);
-
 const RadioSimpleGroup: FC<RadioSimpleGroupProps> = (props: RadioSimpleGroupProps) => {
   const { className, description, id, label, children, style } = props;
 

@@ -1,7 +1,8 @@
-import { CSSProperties, ReactNode } from 'react';
-import { AriaRadioGroupProps } from '@react-types/radio';
+import type { AriaAttributes, CSSProperties, ReactNode } from 'react';
+import type { AriaRadioGroupProps } from '@react-types/radio';
+import type { RequireEither } from 'src/utils/a11y';
 
-export interface RadioSimpleGroupProps extends AriaRadioGroupProps {
+interface Props extends AriaRadioGroupProps {
   /**
    * Custom class for overriding this component's CSS.
    */
@@ -27,3 +28,6 @@ export interface RadioSimpleGroupProps extends AriaRadioGroupProps {
    */
   style?: CSSProperties;
 }
+
+export type RadioSimpleGroupProps = Props &
+  RequireEither<AriaAttributes & Props, ['label', 'aria-label', 'aria-labelledby']>;
