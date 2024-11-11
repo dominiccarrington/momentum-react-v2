@@ -9,11 +9,9 @@ import RadioSimple from '../RadioSimple';
 import Text from '../Text';
 import Icon from '../Icon';
 
-jest.mock('uuid', () => {
-  return {
-    v4: () => '1',
-  };
-});
+jest.mock('uuid', () => ({
+  v4: () => '1',
+}));
 
 describe('<RadioSimpleGroup />', () => {
   const children = [
@@ -163,6 +161,20 @@ describe('<RadioSimpleGroup />', () => {
       const radioGroup = screen.getByRole('radiogroup');
 
       expect(radioGroup.id).toBe(id);
+    });
+
+    it('when not provided with an id, should not have the id refresh between renders', () => {
+      jest.mock('uuid', () => ({
+        v4: jest.requireActual('uuid').v4,
+      }));
+
+      const { rerender } = render(<RadioSimpleGroup children={children} />);
+
+      const id = screen.getByRole('radiogroup').id;
+
+      rerender(<RadioSimpleGroup children={children} />);
+
+      expect(id).toEqual(screen.getByRole('radiogroup').id);
     });
 
     it('should have provided style when style is provided', () => {

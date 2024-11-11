@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import classnames from 'classnames';
 import { v4 as uuidV4 } from 'uuid';
 import { useRadioGroup } from '@react-aria/radio';
@@ -16,9 +16,10 @@ export const RadioSimpleGroupContext = React.createContext(null);
 const RadioSimpleGroup: FC<RadioSimpleGroupProps> = (props: RadioSimpleGroupProps) => {
   const { className, description, id, label, children, style } = props;
 
+  const [uuid] = useState(uuidV4);
   const state = useRadioGroupState(props);
   const { radioGroupProps, labelProps } = useRadioGroup(props, state);
-  const radioSimpleGroupId = id || uuidV4();
+  const radioSimpleGroupId = id || uuid;
   const descriptionId = description
     ? `radio-simple-group-description-${radioSimpleGroupId}`
     : undefined;
